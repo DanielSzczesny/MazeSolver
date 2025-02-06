@@ -12,6 +12,13 @@ def main():
     cell = Cell(Point(100, 100), Point(120, 120), win)
     cell.has_bottom_wall = False
     cell.draw()
+    cell_b = Cell(Point(100, 120), Point(120, 140), win)
+    cell_b.has_top_wall = False
+    cell_b.has_right_wall = False
+    cell_b.draw()
+
+    cell.draw_move(cell_b)
+
     win.wait_for_close()
 
 
