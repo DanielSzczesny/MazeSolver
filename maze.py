@@ -1,3 +1,5 @@
+import time
+
 from cell import Cell
 from point import Point
 
@@ -11,7 +13,7 @@ class Maze:
             num_cols,
             cell_size_x,
             cell_size_y,
-            win
+            win=None
     ):
         self.x1 = x1
         self.y1 = y1
@@ -22,6 +24,7 @@ class Maze:
         self.win = win
         self._cells = []
         self._create_cells()
+        self._break_entrance_and_exit()
 
     def _create_cells(self):
         for i in range(0, self.num_cols):
@@ -33,6 +36,22 @@ class Maze:
                 cell = Cell(point_a, point_b, self.win)
                 column.append(cell)
             self._cells.append(column)
+        self._draw_cell()
+
+    def _draw_cell(self):
         for column in self._cells:
             for cell in column:
                 cell.draw()
+        self._animate()
+
+    def _animate(self):
+        if self.win is None:
+            return
+        self.win.redraw()
+        time.sleep(0.05)
+
+    def _break_entrance_and_exit(self):
+        self._cells[0][0].has_top_wall = False
+        self._draw_cell()
+        self._cells[-1][-1].has_bottom_wall = False
+        self._draw_cell()
