@@ -12,6 +12,7 @@ class Cell:
         self.x2 = point_b.x
         self.y2 = point_b.y
         self._win = window
+        self.visited = False
 
     def draw(self):
         if self._win is None:
