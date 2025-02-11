@@ -74,9 +74,6 @@ class Maze:
         self._cells[i][j].visited = True
         while True:
             next_to_visit = []
-            if i + 1 < self.num_cols:
-                if self._cells[i + 1][j] is not None and self._cells[i + 1][j].visited is False:
-                    next_to_visit.append((i + 1, j))
             if i - 1 >= 0:
                 if self._cells[i - 1][j] is not None and self._cells[i - 1][j].visited is False:
                     next_to_visit.append((i - 1, j))
@@ -86,6 +83,9 @@ class Maze:
             if j - 1 >= 0:
                 if self._cells[i][j - 1] is not None and self._cells[i][j - 1].visited is False:
                     next_to_visit.append((i, j - 1))
+            if i + 1 < self.num_cols:
+                if self._cells[i + 1][j] is not None and self._cells[i + 1][j].visited is False:
+                    next_to_visit.append((i + 1, j))
 
             if len(next_to_visit) == 0:
                 self._draw_cell(i, j)
@@ -98,27 +98,19 @@ class Maze:
                     if next_j == j + 1:
                         self._cells[i][j].has_right_wall = False
                         self._cells[i][j + 1].has_left_wall = False
-                        self._draw_cell(i, j)
-                        self._draw_cell(i, j + 1)
                         self._break_walls_r(i, j + 1)
                     else:
                         self._cells[i][j - 1].has_right_wall = False
                         self._cells[i][j].has_left_wall = False
-                        self._draw_cell(i, j)
-                        self._draw_cell(i, j - 1)
                         self._break_walls_r(i, j - 1)
                 elif next_j == j:
                     if next_i == i + 1:
                         self._cells[i][j].has_bottom_wall = False
                         self._cells[i + 1][j].has_top_wall = False
-                        self._draw_cell(i, j)
-                        self._draw_cell(i + 1, j)
                         self._break_walls_r(i + 1, j)
                     else:
                         self._cells[i - 1][j].has_bottom_wall = False
                         self._cells[i][j].has_top_wall = False
-                        self._draw_cell(i, j)
-                        self._draw_cell(i - 1, j)
                         self._break_walls_r(i - 1, j)
 
     def _reset_visited_status(self):
